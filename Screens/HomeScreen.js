@@ -6,7 +6,7 @@ export default class HomeScreen extends React.Component{
     constructor(){
         super();
         this.state = {
-            text: text,
+            text: "",
             isSearchPressed:false,
             word: "",
             lexicalCategory : "",
