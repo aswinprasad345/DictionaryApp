@@ -17,7 +17,7 @@ export default class HomeScreen extends React.Component{
     render(){
         return(
             <View>
-                <Header centerComponent={{ text : "DICTIONARYAPP" , style: { color : '#fff'} }} />
+                <Header centerComponent={{ text : "DICTIONARYAPP" , style: { color : '#fff' } }} />
                 <TextInput 
                 style={styles.inputBox} 
                 onChangeText={text => {
@@ -31,6 +31,13 @@ export default class HomeScreen extends React.Component{
                     })
                 }}
                 />
+                <TouchableOpacity 
+                    styles = {styles.searchButton} 
+                    onPress={(()=>{
+                        
+                    })}>
+                    <Text>Search</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -38,8 +45,26 @@ export default class HomeScreen extends React.Component{
 
 const styles = StyleSheet.create({
     inputBox:{
-        width: '80%',
-        alignSelf: 'center',
-        height:40,
-    }
+        width:"75%", 
+        height:35, 
+        alignSelf:'center', 
+        borderColor:'#ffab91', 
+        borderRadius:10, 
+        borderWidth:1, 
+        marginTop:20, 
+        padding:10, 
+    },
+    searchButton:{ 
+        width:"75%", 
+        height:50, 
+        justifyContent:'center', 
+        alignItems:'center', 
+        borderRadius:10, 
+        backgroundColor:"#ff5722", 
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 8,
+            },
+        }        
 })
