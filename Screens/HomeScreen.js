@@ -14,6 +14,38 @@ export default class HomeScreen extends React.Component{
             defination : "",
         }
     }
+    getWord=(word)=>{
+        var searchKeyword = word.toLowerCase();
+        var url = "https://rupinwhitehatjr.github.io/dictionary/"+searchKeyword+".json"
+
+        return fetch(url)
+        .then((data)=>{
+            if(data.status === 200){
+                return data.json();
+            }else{
+                return null;
+            }
+        })
+        .then((response)=>{
+            var responseObject = response;
+            if(responseObject){
+                var wordData = responseObject.definitions[0]
+                var definition = wordData.description
+                var lexicalCategories = wordData.wordType
+
+                this.setState({
+                    word : this.state.text,
+                    defination : definition,
+                    lexicalCategory : lexicalCategories
+                })
+            }else{
+                this.setState({
+                    word : this.state.text,
+                    definition : "Not Found",
+                })
+            }
+        })
+    }
     render(){
         return(
             <View>
@@ -32,9 +64,10 @@ export default class HomeScreen extends React.Component{
                 }}
                 />
                 <TouchableOpacity 
-                    styles = {styles.searchButton} 
-                    onPress={(()=>{
-                        
+                    style = {styles.searchButton} 
+                    onPress = {(()=>{
+                        this.setState({ isSearchPressed : true })
+                        this.getWord(this.state.text);
                     })}>
                     <Text>Search</Text>
                 </TouchableOpacity>
@@ -56,7 +89,7 @@ const styles = StyleSheet.create({
     },
     searchButton:{ 
         width:"75%", 
-        height:50, 
+        height:40, 
         justifyContent:'center', 
         alignItems:'center', 
         borderRadius:10, 
@@ -66,5 +99,7 @@ const styles = StyleSheet.create({
             width: 0,
             height: 8,
             },
+        marginLeft : 45,
+        marginTop : 10    
         }        
 })
