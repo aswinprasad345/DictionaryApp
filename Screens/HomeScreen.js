@@ -48,7 +48,7 @@ export default class HomeScreen extends React.Component{
     }
     render(){
         return(
-            <View>
+            <View style = {styles.container}>
                 <Header centerComponent={{ text : "DICTIONARYAPP" , style: { color : '#fff' } }} />
                 <TextInput 
                 style={styles.inputBox} 
@@ -71,12 +71,27 @@ export default class HomeScreen extends React.Component{
                     })}>
                     <Text>Search</Text>
                 </TouchableOpacity>
+                    <Text style = {styles.title}>Word : {""}</Text>
+                    <Text style = {{ fontSize : 18 , marginTop : -30 , marginLeft : 150}}>{this.state.word}</Text>
+                    <Text style = {styles.title}>Type : {""}</Text>
+                    <Text style = {{ fontSize : 18 , marginleft : -10 }}>{this.state.lexicalCategory}</Text>
+                    <Text style = {styles.title}>Definition : {""}</Text>
+                    <Text style = {{ fontSize : 18 , marginLeft : 30 }}>{this.state.defination}</Text>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flex : 1
+    },
+    title:{
+        color: 'black',
+        marginTop: 20,
+        marginLeft: 30,
+        fontSize : 30
+    },
     inputBox:{
         width:"75%", 
         height:35, 
