@@ -1,50 +1,40 @@
 import React from 'react';
 import { StyleSheet, Text, View , TextInput , TouchableOpacity } from 'react-native';
 import { Header } from 'react-native-elements';
+import dictionary from '../database.js';
 
 export default class HomeScreen extends React.Component{
     constructor(){
         super();
         this.state = {
-            text: "",
-            isSearchPressed:false,
-            word: "",
+            text : "",
+            wordSearched : "",
+            wordFromDatabase : "",
             lexicalCategory : "",
-            examples : [],
-            defination : "",
+            definition : "",
+            isButtonPressed : "",
         }
     }
-    getWord=(word)=>{
-        var searchKeyword = word.toLowerCase();
-        var url = "https://rupinwhitehatjr.github.io/dictionary/"+searchKeyword+".json"
+    getWord=(text)=>{
+        var text = text.toLowerCase();
 
-        return fetch(url)
-        .then((data)=>{
-            if(data.status === 200){
-                return data.json();
-            }else{
-                return null;
-            }
-        })
-        .then((response)=>{
-            var responseObject = response;
-            if(responseObject){
-                var wordData = responseObject.definitions[0]
-                var definition = wordData.description
-                var lexicalCategories = wordData.wordType
-
-                this.setState({
-                    word : this.state.text,
-                    defination : definition,
-                    lexicalCategory : lexicalCategories
-                })
-            }else{
-                this.setState({
-                    word : this.state.text,
-                    definition : "Not Found",
-                })
-            }
-        })
+        try{
+            var word = dictionary[text]["word"]
+            var lexicalCategory = dictionary[text]["lexicalCategory"]
+            var definition = dictionary[text]["definition"]
+            this.setState({
+                "word" : word,
+                "lexicalCategory" : lexicalCategory,
+                "definition" : definition
+            })
+        }
+        catch(err){
+            alert("Sorry , this word is not available right now");
+            this.setState({
+                "text" : "",
+                "isButtonPressed" : false,
+            })
+        }    
     }
     render(){
         return(
@@ -74,7 +64,7 @@ export default class HomeScreen extends React.Component{
                     <Text style = {styles.title}>Word : {""}</Text>
                     <Text style = {{ fontSize : 18 , marginTop : -30 , marginLeft : 150}}>{this.state.word}</Text>
                     <Text style = {styles.title}>Type : {""}</Text>
-                    <Text style = {{ fontSize : 18 , marginleft : -10 }}>{this.state.lexicalCategory}</Text>
+                    <Text style = {{ fontSize : 18 , marginleft : 100 }}>{this.state.lexicalCategory}</Text>
                     <Text style = {styles.title}>Definition : {""}</Text>
                     <Text style = {{ fontSize : 18 , marginLeft : 30 }}>{this.state.defination}</Text>
             </View>
